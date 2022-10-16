@@ -1,0 +1,13 @@
+{% extends './base.html' %}
+
+{% block content %}
+<h1>Posts</h1>
+<hr>
+{% for post in post_list %}
+<div>
+    <h3>{{ post.user.username }} says:</h3>
+    <p>{{ post.content }}</p>
+    <a href="{% url 'postdelete' post.id %}">Delete</a>
+</div>
+{% endfor %}
+{% endblock %}

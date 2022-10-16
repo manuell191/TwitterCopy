@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from .models import User, Post
-from .forms import UserCreateForm
+from .forms import PostCreateForm, UserCreateForm
 
 # Create your views here.
 def home(request):
@@ -20,4 +20,18 @@ class UserCreate(CreateView):
 def UserDelete(request, pk):
     user = User.objects.get(id=pk)
     user.delete()
-    return redirect('home')
+    return redirect('userlist')
+
+class PostList(ListView):
+    model = Post
+    template_name = 'post_list.html'
+
+class PostCreate(CreateView):
+    model = Post
+    template_name = 'post_create.html'
+    form_class = PostCreateForm
+
+def PostDelete(request, pk):
+    post = Post.objects.get(id=pk)
+    post.delete()
+    return redirect('postlist')
