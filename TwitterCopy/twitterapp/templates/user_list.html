@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>User List</h1>
+<hr>
 <table>
     <tr>
         <th>
@@ -16,7 +17,7 @@
             {{ user.username }}
         </td>
         <td>
-            Delete
+            <a href="{% url 'userdelete' %}">Delete</a>
         </td>
     </tr>
     {% endfor %}
