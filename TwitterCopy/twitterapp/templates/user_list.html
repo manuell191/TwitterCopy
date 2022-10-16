@@ -17,7 +17,7 @@
             {{ user.username }}
         </td>
         <td>
-            <a href="{% url 'userdelete' %}">Delete</a>
+            <a href="{% url 'userdelete' user.id %}">Delete</a>
         </td>
     </tr>
     {% endfor %}

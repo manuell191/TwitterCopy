@@ -4,6 +4,9 @@ from django.db import models
 class User(models.Model):
     username = models.CharField(max_length=30)
 
+    def get_absolute_url(self):
+        return "list"
+
     def __str__(self):
         return "User's username is: " + self.username
 
