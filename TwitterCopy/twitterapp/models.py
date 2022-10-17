@@ -8,7 +8,7 @@ class User(models.Model):
         return "list"
 
     def __str__(self):
-        return "User's username is: " + self.username
+        return self.username
 
 class Post(models.Model):
     content = models.CharField(max_length=200)
