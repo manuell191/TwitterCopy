@@ -26,7 +26,7 @@
     {% for user in user_list %}
     <tr>
         <td>
-            {{ user.username }}
+            <a class="username" href="{% url 'userprofile' user.id %}">{{ user.username }}</a>
         </td>
         <td>
             <a class="button" href="{% url 'userdelete' user.id %}">Delete</a>

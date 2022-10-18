@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     username = models.CharField(max_length=30)
+    bio = models.CharField(max_length=200, default="", blank=True)
 
     def get_absolute_url(self):
         return "list"

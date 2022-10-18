@@ -8,5 +8,7 @@ urlpatterns = [
     path('user/delete/<pk>', views.UserDelete, name='userdelete'),
     path('post/list', views.PostList.as_view(), name='postlist'),
     path('post/create', views.PostCreate.as_view(), name='postcreate'),
-    path('post/delete/<pk>', views.PostDelete, name='postdelete')
+    path('post/delete/<pk>', views.PostDelete, name='postdelete'),
+    path('user/profile/<pk>', views.UserProfile, name='userprofile'),
+    path('user/update/<pk>', views.UserUpdate, name='userupdate')
 ]

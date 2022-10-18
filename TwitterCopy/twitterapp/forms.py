@@ -7,6 +7,9 @@ class UserCreateForm(forms.ModelForm):
         self.fields['username'].widget.attrs.update({
             'autocomplete': 'off'
         })
+        self.fields['bio'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
     class Meta:
         model = User
         fields = '__all__'
@@ -20,4 +23,17 @@ class PostCreateForm(forms.ModelForm):
 
     class Meta:
         model = Post
+        fields = '__all__'
+
+class UserUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserCreateForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+        self.fields['bio'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+    class Meta:
+        model = User
         fields = '__all__'

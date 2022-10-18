@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from .models import User, Post
 from .forms import PostCreateForm, UserCreateForm
 
@@ -35,3 +35,25 @@ def PostDelete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return redirect('postlist')
+
+def UserProfile(request, pk):
+    query = Post.objects.filter(user=pk)
+    user = User.objects.get(id=pk)
+    context = {
+        "post_list": query,
+        "user": user
+    }
+    return render(request, 'user_profile.html', context)
+
+def UserUpdate(request, pk):
+    if request.method == "POST":
+        form =  UserCreateForm(request.POST)
+        if form.is_valid:
+            user = User.objects.get(id=pk)
+            user.username = request.POST["username"]
+            user.bio = request.POST["bio"]
+            user.save()
+            return redirect('userlist')
+    else:
+        form = UserCreateForm
+    return render(request, 'user_update.html', {"form": form})

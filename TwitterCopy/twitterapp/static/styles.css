@@ -42,3 +42,16 @@
 td {
     padding: 5px;
 }
+
+.username {
+    text-decoration: none;
+    color: black;
+}
+
+.username:hover {
+    color: #44B78B;
+}
+
+.bio {
+    margin-bottom: 25px;
+}

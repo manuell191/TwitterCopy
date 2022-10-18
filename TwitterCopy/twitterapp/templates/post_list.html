@@ -17,7 +17,7 @@
 <hr>
 {% for post in post_list %}
 <div>
-    <h3>{{ post.user.username }} says:</h3>
+    <h3><a class="username" href="{% url 'userprofile' post.user.id %}">{{ post.user.username }} says:</a></h3>
     <p>{{ post.content }}</p>
     <a class="button" href="{% url 'postdelete' post.id %}">Delete</a>
 </div>
