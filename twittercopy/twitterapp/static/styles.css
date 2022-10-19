@@ -1,0 +1,57 @@
+.navbar {
+    background-color: #2E2D2E;
+    padding: 10px;
+}
+
+.navbar a.here {
+    background-color: #44B78B;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar a.here:hover {
+    background-color: #4DD6A2;
+}
+
+.navbar a {
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #808080;
+}
+
+.button {
+    background-color: #44B78B;
+    color: white;
+    padding: 5px 7px;
+    text-decoration: none;
+    border-radius: 7px;
+    border: none;
+}
+
+.button:hover {
+    background-color: #4DD6A2;
+}
+
+td {
+    padding: 5px;
+}
+
+.username {
+    text-decoration: none;
+    color: black;
+}
+
+.username:hover {
+    color: #44B78B;
+}
+
+.bio {
+    margin-bottom: 25px;
+}
