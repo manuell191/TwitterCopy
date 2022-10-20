@@ -7,11 +7,21 @@ class LoginForm(forms.Form):
         self.fields['username'].widget.attrs.update({
             'autocomplete': 'off'
         })
-        self.fields['bio'].widget.attrs.update({
-            'autocomplete': 'off'
-        })
     
     username = forms.CharField(label='Username')
     password = forms.CharField(widget=forms.PasswordInput())
-    bio = forms.CharField(label='Bio')
-    
+
+class CreateUserForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+        self.fields['bio'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+
+    username = forms.CharField(label='Username')
+    password1 = forms.CharField(widget=forms.PasswordInput(), label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(), label='Password again')
+    bio = forms.CharField(label='User Bio (optional)', required=False)
