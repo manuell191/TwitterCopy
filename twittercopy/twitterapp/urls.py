@@ -8,5 +8,9 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logout'),
     path('register', views.registerPage, name='register'),
     path('user/list', views.UserList.as_view(), name='userlist'),
-    path('user/profile/<pk>', views.userProfile, name='userprofile')
+    path('user/profile/<pk>', views.userProfile, name='userprofile'),
+    path('post/list', views.postList, name='postlist'),
+    path('post/create', views.postCreate, name='postcreate'),
+    path('post/delete/confirm/<pk>', views.postDeleteConfirm, name='postdeleteconfirm'),
+    path('post/detele/<pk>', views.postDelete, name='postdelete')
 ]

@@ -9,13 +9,27 @@
 {% block content %}
 <div class="navbar">
     <a class="here" href="{% url 'home' %}">Home</a>
-    <a href="">Browse</a>
+    <a href="{% url 'postlist' %}">Browse</a>
     <a href="{% url 'userlist' %}">Users</a>
+    {% if user.is_authenticated %}
+    <a class="right" href="{% url 'logout' %}">Log out</a>
+    <a class="right" href="{% url 'userprofile' user.id %}">Profile</a>
+    {% else %}
+    <a class="right" href="{% url 'register' %}">Register</a>
+    <a class="right" href="{% url 'login' %}">Login</a>
+    {% endif %}
 </div>
+{% if user.is_authenticated %}
 <h1>Welcome {{ user }}!</h1>
+{% else %}
+<h1>Welcome!</h1>
+{% endif %}
 <hr>
 <div>
-    <a class="button" href="">Create User</a>
-    <a class="button" href="">Create Post</a>
+    {% if user.is_authenticated %}
+    <a class="button" href="{% url 'postcreate' %}">Create Post</a>
+    {% else %}
+    <a class="button" href="{% url 'login' %}">Create Post</a>
+    {% endif %}
 </div>
 {% endblock %}

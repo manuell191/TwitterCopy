@@ -11,6 +11,13 @@
     <a href="{% url 'home' %}">Home</a>
     <a href="">Browse</a>
     <a class="here" href="{% url 'userlist' %}">Users</a>
+    {% if user.is_authenticated %}
+    <a class="right" href="{% url 'logout' %}">Log out</a>
+    <a class="right" href="{% url 'userprofile' user.id %}">Profile</a>
+    {% else %}
+    <a class="right" href="{% url 'register' %}">Register</a>
+    <a class="right" href="{% url 'login' %}">Login</a>
+    {% endif %}
 </div>
 
 <h1>User List</h1>
@@ -20,8 +27,6 @@
         <th>
             Username
         </th>
-        <th>
-        </th>
     </tr>
     {% for user in user_list %}
     {% if user.username == 'admin' %}
@@ -29,10 +34,7 @@
     {% else %}
     <tr>
         <td>
-            <a class="username" href="{% url 'userprofile' user.user.id %}">{{ user.username }}</a>
-        </td>
-        <td>
-            <a class="button" href="">Delete</a>
+            <a class="username" href="{% url 'userprofile' user.id %}">{{ user.username }}</a>
         </td>
     </tr>
     {% endif %}

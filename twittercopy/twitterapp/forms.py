@@ -25,3 +25,12 @@ class CreateUserForm(forms.Form):
     password1 = forms.CharField(widget=forms.PasswordInput(), label='Password')
     password2 = forms.CharField(widget=forms.PasswordInput(), label='Password again')
     bio = forms.CharField(label='User Bio (optional)', required=False)
+
+class CreatePostForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(CreatePostForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+
+    content = forms.CharField(label='Content')

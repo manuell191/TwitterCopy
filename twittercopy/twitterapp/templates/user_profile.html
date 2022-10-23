@@ -7,28 +7,48 @@
 {% endblock %}
 
 {% block content %}
+{% if user == profile.user %}
+<div class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="">Browse</a>
+    <a href="{% url 'userlist' %}">Users</a>
+
+    <a class="right" href="{% url 'logout' %}">Log out</a>
+    <a class="right here" href="{% url 'userprofile' user.id %}">Profile</a>
+</div>
+{% else %}
 <div class="navbar">
     <a href="{% url 'home' %}">Home</a>
     <a href="">Browse</a>
     <a class="here" href="{% url 'userlist' %}">Users</a>
+    {% if user.is_authenticated %}
+    <a class="right" href="{% url 'logout' %}">Log out</a>
+    <a class="right" href="{% url 'userprofile' user.id %}">Profile</a>
+    {% else %}
+    <a class="right" href="{% url 'register' %}">Register</a>
+    <a class="right" href="{% url 'login' %}">Login</a>
+    {% endif %}
 </div>
+{% endif %}
 
 <div>
     <h1>{{ profile.user.username }}</h1>
     {% if profile.bio != "" %}
-    <p class="space">{{ profile.bio }}</p>
+    <p class="bottomspace">{{ profile.bio }}</p>
     {% endif %}
+    {% if user == profile.user %}
     <a class="button" href="">Update</a>
+    {% endif %}
 </div>
 <hr>
-{% comment %}
 {% for post in post_list %}
 <div>
-    <h3><a class="username" href="{% url 'userprofile' user.user.id %}">{{ post.user.username }} says:</a></h3>
+    <h3><a class="username" href="{% url 'userprofile' profile.user.id %}">{{ post.author.user.username }} says:</a></h3>
     <p>{{ post.content }}</p>
-    <a class="button" href="">Delete</a>
+    {% if user == profile.user %}
+    <a class="button" href="{% url 'postdeleteconfirm' post.id %}">Delete</a>
+    {% endif %}
 </div>
 <hr>
 {% endfor %}
-{% endcomment %}
 {% endblock %}

@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
-from .forms import LoginForm, CreateUserForm
-from .models import Profile
+from .forms import LoginForm, CreateUserForm, CreatePostForm
+from .models import Profile, Post
 
 # Create your views here.
 def home(request):
@@ -25,6 +26,7 @@ def registerPage(request):
             User.objects.create_user(username=username, password=password1)
             user = User.objects.get(username=username)
             profile = Profile(user=user, bio=bio)
+            profile.save()
 
             user = authenticate(request, username=username, password=password1)
             login(request, user)
@@ -70,5 +72,43 @@ class UserList(ListView):
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     profile = Profile.objects.get(user=user)
-    context = {'profile': profile}
+    query = Post.objects.all()
+    context = {
+        'profile': profile,
+        'post_list': query
+    }
     return render(request, 'user_profile.html', context)
+
+def postList(request):
+    query = Post.objects.all()
+    context = {'post_list': query}
+    return render(request, 'post_list.html', context)
+
+@login_required
+def postCreate(request):
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            content = request.POST.get('content')
+            user = request.user
+            author = Profile.objects.get(user=user)
+
+            post = Post(author=author, content=content)
+            post.save()
+
+            return redirect('postlist')
+    form = CreatePostForm()
+    context = {'form': form}
+    return render(request, 'post_create.html', context)
+
+@login_required
+def postDeleteConfirm(request, pk):
+    post = Post.objects.get(id=pk)
+    context = {'post': post}
+    return render(request, 'post_delete.html', context)
+
+@login_required
+def postDelete(request, pk):
+    post = Post.objects.get(id=pk)
+    post.delete()
+    return redirect('postlist')

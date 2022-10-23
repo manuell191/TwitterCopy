@@ -5,10 +5,6 @@
 
 .navbar a.here {
     background-color: #44B78B;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
 }
 
 .navbar a.here:hover {
@@ -24,6 +20,12 @@
 
 .navbar a:hover {
     background-color: #808080;
+}
+
+.navbar a.right {
+    position: relative;
+    top: -10px;
+    float: right;
 }
 
 .button {
@@ -52,6 +54,12 @@ td {
     color: #44B78B;
 }
 
-.space {
-    margin-bottom: 25px;
+.bottomspace {
+    position: relative;
+    bottom: 10px;
+}
+
+.topspace {
+    position: relative;
+    top: 10px;
 }
