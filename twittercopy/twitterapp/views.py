@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
-from .forms import LoginForm, CreateUserForm, CreatePostForm
+from .forms import LoginForm, CreateUserForm, CreatePostForm, UpdateUserForm, UpdatePasswordForm
 from .models import Profile, Post
 
 # Create your views here.
@@ -43,11 +43,6 @@ def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'User does not exist')
         
         user = authenticate(request, username=username, password=password)
 
@@ -112,3 +107,42 @@ def postDelete(request, pk):
     post = Post.objects.get(id=pk)
     post.delete()
     return redirect('postlist')
+
+@login_required
+def userUpdate(request, pk):
+    if request.method == 'POST':
+        form =  UpdateUserForm(request.POST)
+        if form.is_valid:
+            username = request.POST.get('username')
+            bio = request.POST.get('bio')
+
+            user = User.objects.get(id=pk)
+            user.username = username
+            user.save()
+
+            profile = Profile.objects.get(user=user)
+            profile.bio = bio
+            user.save()
+            return redirect('userlist')
+    form = UpdateUserForm()
+    context = {'form': form}
+    return render(request, 'user_update.html', context)
+
+@login_required
+def passwordUpdate(request, pk):
+    if request.method == 'POST':
+        form =  UpdatePasswordForm(request.POST)
+        if form.is_valid:
+            password1 = request.POST.get('password1')
+            password2 = request.POST.get('password2')
+
+            if password1 != password2:
+                messages.error(request, 'Passwords do not match')
+            
+            user = User.objects.get(id=pk)
+            user.set_password(password1)
+            user.save()
+            return redirect('userlist')
+    form = UpdatePasswordForm()
+    context = {'form': form}
+    return render(request, 'password_update.html', context)

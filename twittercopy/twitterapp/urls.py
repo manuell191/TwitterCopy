@@ -12,5 +12,7 @@ urlpatterns = [
     path('post/list', views.postList, name='postlist'),
     path('post/create', views.postCreate, name='postcreate'),
     path('post/delete/confirm/<pk>', views.postDeleteConfirm, name='postdeleteconfirm'),
-    path('post/detele/<pk>', views.postDelete, name='postdelete')
+    path('post/detele/<pk>', views.postDelete, name='postdelete'),
+    path('user/update/<pk>', views.userUpdate, name='userupdate'),
+    path('user/password/update/<pk>', views.passwordUpdate, name='passwordupdate')
 ]

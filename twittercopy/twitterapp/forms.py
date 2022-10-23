@@ -34,3 +34,20 @@ class CreatePostForm(forms.Form):
         })
 
     content = forms.CharField(label='Content')
+
+class UpdateUserForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+        self.fields['bio'].widget.attrs.update({
+            'autocomplete': 'off'
+        })
+
+    username = forms.CharField(label='Username')
+    bio = forms.CharField(label='User Bio (optional)', required=False)
+
+class UpdatePasswordForm(forms.Form):
+    password1 = forms.CharField(widget=forms.PasswordInput(), label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(), label='Password again')

@@ -26,10 +26,6 @@
 {% endif %}
 <hr>
 <div>
-    {% if user.is_authenticated %}
     <a class="button" href="{% url 'postcreate' %}">Create Post</a>
-    {% else %}
-    <a class="button" href="{% url 'login' %}">Create Post</a>
-    {% endif %}
 </div>
 {% endblock %}

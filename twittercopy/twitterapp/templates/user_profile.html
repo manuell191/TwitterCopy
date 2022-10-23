@@ -10,16 +10,15 @@
 {% if user == profile.user %}
 <div class="navbar">
     <a href="{% url 'home' %}">Home</a>
-    <a href="">Browse</a>
+    <a href="{% url 'postlist' %}">Browse</a>
     <a href="{% url 'userlist' %}">Users</a>
-
     <a class="right" href="{% url 'logout' %}">Log out</a>
     <a class="right here" href="{% url 'userprofile' user.id %}">Profile</a>
 </div>
 {% else %}
 <div class="navbar">
     <a href="{% url 'home' %}">Home</a>
-    <a href="">Browse</a>
+    <a href="{% url 'postlist' %}">Browse</a>
     <a class="here" href="{% url 'userlist' %}">Users</a>
     {% if user.is_authenticated %}
     <a class="right" href="{% url 'logout' %}">Log out</a>
