@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
 from .forms import LoginForm, CreateUserForm, CreatePostForm, UpdateUserForm, UpdatePasswordForm
 from .models import Profile, Post
 
@@ -61,15 +60,15 @@ def logoutUser(request):
     logout(request)
     return redirect('home')
 
-#the only cbv because it's so simple
-class UserList(ListView):
-    model = User
-    template_name = 'user_list.html'
+def userList(request):
+    query = User.objects.all().order_by('username')
+    context = {'user_list': query}
+    return render(request, 'user_list.html', context)
 
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     profile = Profile.objects.get(user=user)
-    query = Post.objects.get(author=profile)
+    query = Post.objects.filter(author=profile).order_by('-id').values()
     context = {
         'profile': profile,
         'post_list': query
@@ -77,7 +76,7 @@ def userProfile(request, pk):
     return render(request, 'user_profile.html', context)
 
 def postList(request):
-    query = Post.objects.all()
+    query = Post.objects.all().order_by('-id')
     context = {'post_list': query}
     return render(request, 'post_list.html', context)
 
@@ -117,7 +116,7 @@ def postDelete(request, pk):
 @login_required
 def userUpdate(request, pk):
     if request.method == 'POST':
-        form =  UpdateUserForm(request.POST)
+        form = UpdateUserForm(request.POST)
         if form.is_valid:
             username = request.POST.get('username')
             bio = request.POST.get('bio')
@@ -128,7 +127,7 @@ def userUpdate(request, pk):
 
             profile = Profile.objects.get(user=user)
             profile.bio = bio
-            user.save()
+            profile.save()
             return redirect('userlist')
     user = User.objects.get(id=pk)
     if request.user != user:

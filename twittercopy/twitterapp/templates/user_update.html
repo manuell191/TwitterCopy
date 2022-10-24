@@ -19,6 +19,6 @@
 </form>
 <div class="topspace">
     <a class="button" href="{% url 'passwordupdate' user.id %}">Change Password</a>
-    <a class="button" href="{% url 'userdeleteconfirm' %}">Delete</a>
+    <a class="button" href="{% url 'userdeleteconfirm' user.id %}">Delete</a>
 </div>
 {% endblock %}
