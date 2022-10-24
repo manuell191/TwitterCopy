@@ -69,7 +69,7 @@ class UserList(ListView):
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     profile = Profile.objects.get(user=user)
-    query = Post.objects.all()
+    query = Post.objects.get(author=profile)
     context = {
         'profile': profile,
         'post_list': query
