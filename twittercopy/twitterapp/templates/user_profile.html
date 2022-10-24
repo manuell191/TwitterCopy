@@ -36,7 +36,7 @@
     <p class="bottomspace">{{ profile.bio }}</p>
     {% endif %}
     {% if user == profile.user %}
-    <a class="button" href="">Update</a>
+    <a class="button" href="{% url 'userupdate' profile.user.id %}">Update</a>
     {% endif %}
 </div>
 <hr>

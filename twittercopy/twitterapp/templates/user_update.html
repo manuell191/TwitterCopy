@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="navbar">
-    <a class="here" href="{% url 'userprofile' user.id %}">Back</a>
+    <a href="{% url 'userprofile' user.id %}">Back</a>
 </div>
 
 <h1>Update Username and Bio</h1>
@@ -17,8 +17,8 @@
     {{ form.as_p }}
     <input class="button" type="submit"/>
 </form>
-<div>
-    <a class="button" href="">Change Password</a>
-    <a class="button" href="">Delete</a>
+<div class="topspace">
+    <a class="button" href="{% url 'passwordupdate' user.id %}">Change Password</a>
+    <a class="button" href="{% url 'userdeleteconfirm' %}">Delete</a>
 </div>
 {% endblock %}

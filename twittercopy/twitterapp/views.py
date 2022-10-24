@@ -12,6 +12,9 @@ def home(request):
     return render(request, 'home.html')
 
 def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
@@ -36,7 +39,6 @@ def registerPage(request):
     return render(request, 'register.html', context)
 
 def loginPage(request):
-    page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
     
@@ -52,7 +54,7 @@ def loginPage(request):
         else:
             messages.error(request, 'Username OR password does not exist')
         
-    context = {'page': page, 'form': LoginForm}
+    context = {'form': LoginForm}
     return render(request, 'login.html', context)
 
 def logoutUser(request):
@@ -99,12 +101,16 @@ def postCreate(request):
 @login_required
 def postDeleteConfirm(request, pk):
     post = Post.objects.get(id=pk)
+    if request.user != post.author.user:
+        return redirect('home')
     context = {'post': post}
     return render(request, 'post_delete.html', context)
 
 @login_required
 def postDelete(request, pk):
     post = Post.objects.get(id=pk)
+    if request.user != post.author.user:
+        return redirect('home')
     post.delete()
     return redirect('postlist')
 
@@ -124,6 +130,9 @@ def userUpdate(request, pk):
             profile.bio = bio
             user.save()
             return redirect('userlist')
+    user = User.objects.get(id=pk)
+    if request.user != user:
+        return redirect('home')
     form = UpdateUserForm()
     context = {'form': form}
     return render(request, 'user_update.html', context)
@@ -140,9 +149,32 @@ def passwordUpdate(request, pk):
                 messages.error(request, 'Passwords do not match')
             
             user = User.objects.get(id=pk)
+            username = user.username
             user.set_password(password1)
             user.save()
+
+            user = authenticate(request, username=username, password=password1)
+            login(request, user)
             return redirect('userlist')
+    user = User.objects.get(id=pk)
+    if request.user != user:
+        return redirect('home')
+
     form = UpdatePasswordForm()
-    context = {'form': form}
+    context = {'form': form,}
     return render(request, 'password_update.html', context)
+
+@login_required
+def userDeleteConfirm(request, pk):
+    user = User.objects.get(id=pk)
+    if request.user != user:
+        return redirect('home')
+    return render(request, 'user_delete.html')
+
+@login_required
+def userDelete(request, pk):
+    user = User.objects.get(id=pk)
+    if request.user != user:
+        return redirect('home')
+    user.delete()
+    return redirect('home')

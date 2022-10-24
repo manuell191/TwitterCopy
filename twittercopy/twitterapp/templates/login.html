@@ -11,13 +11,8 @@
     <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'postlist' %}">Browse</a>
     <a href="{% url 'userlist' %}">Users</a>
-    {% if user.is_authenticated %}
-    <a class="right" href="{% url 'logout' %}">Log out</a>
-    <a class="right" href="{% url 'userprofile' user.id %}">Profile</a>
-    {% else %}
     <a class="right" href="{% url 'register' %}">Register</a>
     <a class="right here" href="{% url 'login' %}">Login</a>
-    {% endif %}
 </div>
 
 <h1>Login</h1>
@@ -35,5 +30,4 @@
 </form>
 
 <a class="button topspace" href="{% url 'register' %}">Go to register</a>
-
 {% endblock %}
